@@ -1,22 +1,38 @@
 import React, { Component } from 'react';
-import TodoList from '../components/TodoList/TodoList.js';
+import TodoList from '../components/TodoList/TodoList';
+import TodoListItem from '../components/TodoListItem/TodoListItem';
+
+export interface TodoItem {
+    // fill
+    text: string;
+}
 
 
-class TodoApp extends Component {
-    constructor() {
-        super();
+export type TodoList = TodoItem[];
+
+export type DeleteTodoTask = (event:any,id: number) => void;
+
+interface Props{}
+
+interface TodoAppState {
+    todoList: TodoList;
+}
+
+class TodoApp extends Component<unknown, TodoAppState> {
+    constructor(props:Props) {
+        super(props);
         this.state = {
             todoList: []
         }
     }
 
-    deleteTodoTask = (event, index) => {
-        var taskArray = [...this.state.todoList];
+    deleteTodoTask = (event:any, index:number) => {
+        let taskArray = [...this.state.todoList];
         taskArray.splice(index, 1);
         this.setState({ todoList: taskArray });
     }
 
-    AddTodoTask = (event) => {
+    AddTodoTask = (event:any) => {
         var taskDesc = event.target.elements.todoTask.value;
         if (taskDesc.length > 0) {
             this.setState({

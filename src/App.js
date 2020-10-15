@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import TodoApp from './app/TodoApp/TodoApp.js';
+import TodoApp from './app/TodoApp/TodoApp';
 
 class App extends Component {
 

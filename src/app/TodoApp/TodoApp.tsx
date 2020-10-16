@@ -1,24 +1,29 @@
 import React, { Component } from 'react';
 import TodoList from '../components/TodoList/TodoList';
-import TodoListItem from '../components/TodoListItem/TodoListItem';
 
-export interface TodoItem {
+export interface ITodoItem {
     // fill
     text: string;
 }
 
 
-export type TodoList = TodoItem[];
+export type ITodoList = ITodoItem[];
 
-export type DeleteTodoTask = (id: number) => void;
+export type IDeleteTodoTask = (event:any,index: number) => void;
+
+export function deleteTodoTask(arr:[],index:number){
+    let taskArray = arr;
+    taskArray.splice(index, 1);
+    return taskArray;
+}
 
 interface Props{}
 
-interface TodoAppState {
-    todoList: TodoList;
+interface ITodoAppState {
+    todoList: ITodoList;
 }
 
-class TodoApp extends Component<unknown, TodoAppState> {
+class TodoApp extends Component<unknown, ITodoAppState> {
     constructor(props:Props) {
         super(props);
         this.state = {
@@ -32,7 +37,7 @@ class TodoApp extends Component<unknown, TodoAppState> {
         this.setState({ todoList: taskArray });
     }
 
-    AddTodoTask = (event:any) => {
+    addTodoTask = (event:any) => {
         var taskDesc = event.target.elements.todoTask.value;
         if (taskDesc.length > 0) {
             this.setState({
@@ -51,7 +56,7 @@ class TodoApp extends Component<unknown, TodoAppState> {
                         <h1 className="display-4">List of Todos</h1>
                     </div>
                 </div>
-                <form className="mb-3" onSubmit={this.AddTodoTask}>
+                <form className="mb-3" onSubmit={this.addTodoTask}>
                     <div className="input-group">
                         <input type="text" name="todoTask" className="form-control" placeholder="Enter text here..." autoComplete="off" />
                         <div className="input-group-append">

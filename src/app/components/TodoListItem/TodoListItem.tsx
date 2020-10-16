@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { TodoItem as item} from '../../TodoApp/TodoApp';
-import DeleteTodoTask from '../../TodoApp/TodoApp';
+import { ITodoItem as item} from '../../TodoApp/TodoApp';
+import { IDeleteTodoTask } from '../../TodoApp/TodoApp';
 
 interface TodoListItemProps {
-    deleteTodoTask: DeleteTodoTask;
+    deleteTodoTask: IDeleteTodoTask;
     item: item;
-    index: number;
 }
 
 
@@ -14,11 +13,14 @@ function TodoListItem (props: TodoListItemProps){
     
         return (
             <div>
-                <li className="list-group-item" key={props.index}>
-                    {props.item}
+
+                <li className="list-group-item" >
+                    {props.item} 
                     <button className="btn btn-sm btn-outline-danger float-right" 
                     onClick={()=>props.deleteTodoTask}>X</button>
                 </li>
+                
+
             </div>
         );
     }

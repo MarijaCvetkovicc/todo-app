@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { TodoList as list} from '../../TodoApp/TodoApp';
+import { ITodoList as list} from '../../TodoApp/TodoApp';
 import TodoListItem from '../TodoListItem/TodoListItem';
-import DeleteTodoTask from '../../TodoApp/TodoApp';
+import {IDeleteTodoTask} from '../../TodoApp/TodoApp';
 
 interface TodoListProps {
-    deleteTodoTask: DeleteTodoTask;
+    deleteTodoTask: IDeleteTodoTask;
     todoList: list;
 }
 
@@ -17,7 +17,8 @@ function TodoList(props: TodoListProps) {
                 {
                     props.todoList.map(
                         (item, index) => {
-                            return <TodoListItem deleteTodoTask={props.deleteTodoTask} item={item} index={index} />
+                            
+                            return <TodoListItem deleteTodoTask={props.deleteTodoTask} item={item} key={index} />
                         }
                     )
                 }

@@ -10,7 +10,7 @@ export interface TodoItem {
 
 export type TodoList = TodoItem[];
 
-export type DeleteTodoTask = (event:any,id: number) => void;
+export type DeleteTodoTask = (id: number) => void;
 
 interface Props{}
 

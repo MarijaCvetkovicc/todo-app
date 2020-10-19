@@ -11,7 +11,7 @@ export type ITodoList = ITodoItem[];
 
 export type IDeleteTodoTask = (event:any,index: number) => void;
 
-export function deleteTodoTask(arr:[],index:number){
+export function deleteTodoTask(arr:ITodoList,index:number){
     let taskArray = arr;
     taskArray.splice(index, 1);
     return taskArray;
@@ -23,7 +23,7 @@ interface ITodoAppState {
     todoList: ITodoList;
 }
 
-class TodoApp extends Component<unknown, ITodoAppState> {
+class TodoApp extends Component<Props, ITodoAppState> {
     constructor(props:Props) {
         super(props);
         this.state = {

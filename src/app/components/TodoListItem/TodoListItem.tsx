@@ -15,7 +15,7 @@ function TodoListItem (props: TodoListItemProps){
             <div>
 
                 <li className="list-group-item" >
-                    {props.item} 
+                    {props.item.title} 
                     <button className="btn btn-sm btn-outline-danger float-right" 
                     onClick={()=>props.deleteTodoTask}>X</button>
                 </li>

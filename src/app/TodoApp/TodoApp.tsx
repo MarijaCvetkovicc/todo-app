@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import TodoList from '../components/TodoList/TodoList';
+import axios from 'axios';
+import { setConstantValue } from 'typescript';
 
 export interface ITodoItem {
     // fill
-    text: string;
+    id:number;
+    title: string;
+    completed:boolean;
 }
 
 
@@ -23,12 +27,26 @@ interface ITodoAppState {
     todoList: ITodoList;
 }
 
+const api=axios.create({
+    baseURL:'http://localhost:3001/items'
+})
+
+
 class TodoApp extends Component<Props, ITodoAppState> {
     constructor(props:Props) {
         super(props);
         this.state = {
-            todoList: []
+            todoList: [] 
         }
+
+    }
+    componentDidMount(){
+        api.get('/')
+        .then(response =>{
+            console.log(response.data);
+            this.setState({todoList:response.data})
+          });
+        
     }
 
     deleteTodoTask = (event:any, index:number) => {
@@ -40,9 +58,18 @@ class TodoApp extends Component<Props, ITodoAppState> {
     addTodoTask = (event:any) => {
         var taskDesc = event.target.elements.todoTask.value;
         if (taskDesc.length > 0) {
-            this.setState({
+           this.setState({
                 todoList: [...this.state.todoList, taskDesc]
             });
+             /*const item={
+                title: taskDesc,
+                completed:false
+            }
+            api.post('/',{item}).then(response=>{
+                console.log(response.data);
+            }
+
+            );*/
             event.target.reset();
 
         }

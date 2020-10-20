@@ -16,11 +16,13 @@ function TodoList(props: TodoListProps) {
             <ul className="list-group">
                 {
                     props.todoList.map(
-                        (item, index) => {
-                            
-                            return <TodoListItem deleteTodoTask={props.deleteTodoTask} item={item} key={index} />
+                        (item, id) => {
+                            console.log(id);
+                            return <TodoListItem deleteTodoTask={props.deleteTodoTask} item={item} key={id} />
                         }
                     )
+                    
+                    
                 }
             </ul>
         </div>

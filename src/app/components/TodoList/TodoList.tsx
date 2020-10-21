@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
-import { ITodoList as list} from '../../TodoApp/TodoApp';
+import { ITodoList as list} from '../../TodoService';
 import TodoListItem from '../TodoListItem/TodoListItem';
-import {IDeleteTodoTask} from '../../TodoApp/TodoApp';
+import { IDeleteTodoTask } from '../../TodoService';
+
 
 interface TodoListProps {
     deleteTodoTask: IDeleteTodoTask;
     todoList: list;
 }
-
-
 
 function TodoList(props: TodoListProps) {
     return (

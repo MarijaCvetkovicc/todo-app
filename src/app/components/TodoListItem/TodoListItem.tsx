@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { ITodoItem as item} from '../../TodoApp/TodoApp';
-import { IDeleteTodoTask } from '../../TodoApp/TodoApp';
+import { ITodoItem as item} from '../../TodoService';
+import { IDeleteTodoTask } from '../../TodoService';
 
 interface TodoListItemProps {
     deleteTodoTask: IDeleteTodoTask;
     item: item;
 }
-
 
 
 function TodoListItem (props: TodoListItemProps){
@@ -17,7 +16,7 @@ function TodoListItem (props: TodoListItemProps){
                 <li className="list-group-item" >
                     {props.item.title} 
                     <button className="btn btn-sm btn-outline-danger float-right" 
-                    onClick={()=>props.deleteTodoTask}>X</button>
+                    onClick={()=>props.deleteTodoTask(props.item.id)}>X</button>
                 </li>
                 
 

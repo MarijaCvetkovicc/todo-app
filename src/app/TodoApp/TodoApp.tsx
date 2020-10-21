@@ -1,79 +1,71 @@
 import React, { Component } from 'react';
 import TodoList from '../components/TodoList/TodoList';
 import axios from 'axios';
-import { setConstantValue } from 'typescript';
-
-export interface ITodoItem {
-    // fill
-    id:number;
-    title: string;
-    completed:boolean;
-}
+import { ITodoList } from '../TodoService';
+import TodoService from '../TodoService';
 
 
-export type ITodoList = ITodoItem[];
-
-export type IDeleteTodoTask = (event:any,index: number) => void;
-
-export function deleteTodoTask(arr:ITodoList,index:number){
-    let taskArray = arr;
-    taskArray.splice(index, 1);
-    return taskArray;
-}
-
-interface Props{}
+interface Props { }
 
 interface ITodoAppState {
     todoList: ITodoList;
 }
 
-const api=axios.create({
-    baseURL:'http://localhost:3001/items'
+const api = axios.create({
+    baseURL: 'http://localhost:3001/items'
 })
+
+export function deleteTodoTask(arr: ITodoList, index: number) {
+    let taskArray = arr;
+    taskArray.splice(index, 1);
+    return taskArray;
+}
+
 
 
 class TodoApp extends Component<Props, ITodoAppState> {
-    constructor(props:Props) {
+    constructor(props: Props) {
         super(props);
         this.state = {
-            todoList: [] 
+            todoList: []
         }
 
     }
-    componentDidMount(){
-        api.get('/')
-        .then(response =>{
-            console.log(response.data);
-            this.setState({todoList:response.data})
-          });
-        
+
+    componentDidMount() {
+
+        TodoService.getTodos().then((res) => {
+            this.setState({ todoList: res.todoItems });
+
+        });
     }
 
-    deleteTodoTask = (event:any, index:number) => {
-        let taskArray = [...this.state.todoList];
-        taskArray.splice(index, 1);
-        this.setState({ todoList: taskArray });
+    deleteTodoTask = ( id: number) => {
+        //let taskArray = [...this.state.todoList];
+        TodoService.deleteTodo(id);
+        //this.setState({ todoList: taskArray });
+        this.componentDidMount();
     }
 
-    addTodoTask = (event:any) => {
+    addTodoTask = (event: any) => {
         var taskDesc = event.target.elements.todoTask.value;
         if (taskDesc.length > 0) {
-           this.setState({
-                todoList: [...this.state.todoList, taskDesc]
-            });
-             /*const item={
-                title: taskDesc,
-                completed:false
-            }
-            api.post('/',{item}).then(response=>{
-                console.log(response.data);
-            }
-
-            );*/
+            /*this.setState({
+                 todoList: [...this.state.todoList, taskDesc]
+             });*/
+            TodoService.addTodo(taskDesc);
+            /* api.post('/', {
+                 title: taskDesc,
+                 completed:false
+               })
+               .then(function (response) {
+                 console.log(response);
+               })*/
             event.target.reset();
 
+        } else {
+            event.preventDefault();
         }
-        event.preventDefault();
     }
     render() {
         return (

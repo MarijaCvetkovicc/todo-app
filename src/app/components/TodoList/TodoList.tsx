@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { ITodoList as list} from '../../TodoService';
+import React from 'react';
+import { ITodoList as list } from '../../TodoService';
 import TodoListItem from '../TodoListItem/TodoListItem';
 import { IDeleteTodoTask } from '../../TodoService';
 
@@ -16,12 +16,9 @@ function TodoList(props: TodoListProps) {
                 {
                     props.todoList.map(
                         (item, id) => {
-                            console.log(id);
                             return <TodoListItem deleteTodoTask={props.deleteTodoTask} item={item} key={id} />
                         }
                     )
-                    
-                    
                 }
             </ul>
         </div>

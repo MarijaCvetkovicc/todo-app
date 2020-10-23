@@ -1,13 +1,17 @@
 import React, { Component, Fragment } from 'react';
 import TodoList from '../components/TodoList/TodoList';
-import { ITodoList } from '../TodoService';
+import { ITodoList } from '../actions/TodoTypes';
 import TodoService from '../TodoService';
+import { RootStore } from '../Store';
+import { useSelector } from 'react-redux';
+import { GetTodos } from '../actions/TodoAction';
+import { connect, useDispatch } from 'react-redux';
 
 
 interface Props { }
 
 interface ITodoAppState {
-    todoList: ITodoList;
+    //todoList: ITodoList;
     loading: boolean;
 }
 
@@ -22,24 +26,16 @@ class TodoApp extends Component<Props, ITodoAppState> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            todoList: [],
+           // todoList: [],
             loading: false,
         }
+        
     }
-
-    componentDidMount() {
-        this.setState({ loading: true });
-        TodoService.getTodos().then((res) => {
-            setTimeout(() => {
-                this.setState({ loading: false, todoList: res.todoItems });
-            }, 1000);
-
-        });
-    }
+    
 
     deleteTodoTask = (id: number) => {
         TodoService.deleteTodo(id);
-        this.componentDidMount();
+        //this.componentDidMount();
     }
 
     addTodoTask = (event: any) => {
@@ -61,6 +57,8 @@ class TodoApp extends Component<Props, ITodoAppState> {
     }
 
     renderForm() {
+        //const todosState = useSelector((state:RootStore) => state.todos);
+
         return (
             <Fragment>
                 <form className="mb-3" onSubmit={this.addTodoTask}>
@@ -71,7 +69,7 @@ class TodoApp extends Component<Props, ITodoAppState> {
                         </div>
                     </div>
                 </form>
-                <TodoList deleteTodoTask={this.deleteTodoTask.bind(this)} todoList={this.state.todoList} />
+                <TodoList deleteTodoTask={this.deleteTodoTask.bind(this)} todoList={this.props.todos} />
             </Fragment>
         );
     }
@@ -90,4 +88,9 @@ class TodoApp extends Component<Props, ITodoAppState> {
         );
     }
 }
-export default TodoApp;
+const mapStateToProps = (state: RootStore) => ({
+    todos: state.todos.todos
+});
+
+export default connect(mapStateToProps, { GetTodos })(TodoApp);
+//export default TodoApp;

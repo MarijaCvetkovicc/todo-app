@@ -10,7 +10,7 @@ export type IDeleteTodoTask = (id: number) => void;
 
 class TodoService {
 
-    static getTodos = function (): Promise<{ todoItems: ITodoList }> {
+    static getTodos = function (): Promise<ITodoList> {
         return api.get('/').then(response => response.data);
     }
 

@@ -5,9 +5,10 @@ import TodoService from '../TodoService';
 
 export const GetTodos = () => async (dispatch: Dispatch<TodoDispatchTypes>) => {
     TodoService.getTodos().then((res) => {
+        console.log("akcija"+res)
         dispatch({
             type: GET_TODOS,
-            payload: res.todoItems
+            payload: res
             
         })
     });

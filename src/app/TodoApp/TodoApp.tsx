@@ -1,16 +1,15 @@
 import React, { Component, Fragment } from 'react';
 import TodoList from '../components/TodoList/TodoList';
-import { ITodoList,IDefaultState } from '../actions/TodoTypes';
+import { ITodoList, IDefaultState } from '../actions/TodoTypes';
 import TodoService from '../TodoService';
 import { RootStore } from '../Store';
-import { useSelector } from 'react-redux';
 import { GetTodos } from '../actions/TodoAction';
 import { connect, useDispatch } from 'react-redux';
-import RootReducer from '../reducers/RootReducer';
 
 
-interface Props { 
-    todos:ITodoList
+interface Props {
+    todos: ITodoList,
+    getAllTodos():any 
 
 }
 
@@ -31,13 +30,22 @@ class TodoApp extends Component<Props, ITodoAppState> {
         this.state = {
             loading: false,
         }
-        
+
     }
-    
+    componentDidMount(){
+       this.setState({loading:true});
+
+        this.props.getAllTodos().then(() => {
+            setTimeout(() => {
+                this.setState({ loading: false });
+            }, 1000);
+        });
+    }
+
 
     deleteTodoTask = (id: number) => {
         TodoService.deleteTodo(id);
-        //this.componentDidMount();
+        this.componentDidMount();
     }
 
     addTodoTask = (event: any) => {
@@ -91,9 +99,16 @@ class TodoApp extends Component<Props, ITodoAppState> {
 }
 const mapStateToProps = (state: RootStore) => {
     return {
-    todos: state.todos.todos
+        todos: state.todos.todos
     };
 };
+const mapDispatchToProps = (dispatch: any) => {
 
-export default connect(mapStateToProps, { GetTodos })(TodoApp);
+    return {
+        getAllTodos:()=> dispatch(GetTodos()),
+    }
+
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoApp);
 //export default TodoApp;

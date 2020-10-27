@@ -8,6 +8,7 @@ export const GetTodos = () => async (dispatch: Dispatch<TodoDispatchTypes>) => {
         dispatch({
             type: GET_TODOS,
             payload: res.todoItems
+            
         })
     });
 

@@ -1,10 +1,8 @@
 import { TodoDispatchTypes, ADD_TODO, DELETE_TODO, GET_TODOS } from '../actions/TodoTypes'; 
-import {ITodoList} from '../actions/TodoTypes';
+import {ITodoList,IDefaultState} from '../actions/TodoTypes';
 
 
-interface IDefaultState{
-    todos:ITodoList
-}
+
 const defaultState:IDefaultState={
     todos:[]
 }
@@ -14,6 +12,7 @@ const todoReducer = (state:IDefaultState=defaultState,action:TodoDispatchTypes):
         case GET_TODOS:
             console.log('reducer');
             return {
+                ...state,
                 todos:action.payload
             };
         default:

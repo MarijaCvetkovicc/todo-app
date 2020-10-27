@@ -9,7 +9,9 @@ export interface ITodoItem {
 }
 
 export type ITodoList = ITodoItem[];
-
+export interface IDefaultState{
+    todos:ITodoList
+}
 export interface GetTodos {
     type: typeof GET_TODOS
     payload: ITodoList

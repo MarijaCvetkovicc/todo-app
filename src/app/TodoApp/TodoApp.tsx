@@ -1,18 +1,21 @@
 import React, { Component, Fragment } from 'react';
 import TodoList from '../components/TodoList/TodoList';
-import { ITodoList } from '../actions/TodoTypes';
+import { ITodoList,IDefaultState } from '../actions/TodoTypes';
 import TodoService from '../TodoService';
 import { RootStore } from '../Store';
 import { useSelector } from 'react-redux';
 import { GetTodos } from '../actions/TodoAction';
 import { connect, useDispatch } from 'react-redux';
+import RootReducer from '../reducers/RootReducer';
 
 
-interface Props { }
+interface Props { 
+    todos:ITodoList
+
+}
 
 interface ITodoAppState {
-    //todoList: ITodoList;
-    loading: boolean;
+    loading: boolean,
 }
 
 
@@ -26,7 +29,6 @@ class TodoApp extends Component<Props, ITodoAppState> {
     constructor(props: Props) {
         super(props);
         this.state = {
-           // todoList: [],
             loading: false,
         }
         
@@ -57,8 +59,7 @@ class TodoApp extends Component<Props, ITodoAppState> {
     }
 
     renderForm() {
-        //const todosState = useSelector((state:RootStore) => state.todos);
-
+        console.log(this.props.todos);
         return (
             <Fragment>
                 <form className="mb-3" onSubmit={this.addTodoTask}>
@@ -88,9 +89,11 @@ class TodoApp extends Component<Props, ITodoAppState> {
         );
     }
 }
-const mapStateToProps = (state: RootStore) => ({
+const mapStateToProps = (state: RootStore) => {
+    return {
     todos: state.todos.todos
-});
+    };
+};
 
 export default connect(mapStateToProps, { GetTodos })(TodoApp);
 //export default TodoApp;

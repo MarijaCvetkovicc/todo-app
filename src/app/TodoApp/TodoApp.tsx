@@ -1,15 +1,15 @@
 import React, { Component, Fragment } from 'react';
 import TodoList from '../components/TodoList/TodoList';
-import { ITodoList, IDefaultState } from '../actions/TodoTypes';
+import { ITodoList } from '../actions/TodoTypes';
 import TodoService from '../TodoService';
 import { RootStore } from '../Store';
 import { GetTodos } from '../actions/TodoAction';
-import { connect, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 
 
 interface Props {
     todos: ITodoList,
-    getAllTodos():any 
+    getAllTodos(): any
 
 }
 
@@ -32,8 +32,8 @@ class TodoApp extends Component<Props, ITodoAppState> {
         }
 
     }
-    componentDidMount(){
-       this.setState({loading:true});
+    componentDidMount() {
+        this.setState({ loading: true });
 
         this.props.getAllTodos().then(() => {
             setTimeout(() => {
@@ -44,8 +44,15 @@ class TodoApp extends Component<Props, ITodoAppState> {
 
 
     deleteTodoTask = (id: number) => {
+        this.setState({ loading: true });
+
         TodoService.deleteTodo(id);
-        this.componentDidMount();
+        this.props.getAllTodos().then(() => {
+            setTimeout(() => {
+                this.setState({ loading: false });
+            }, 1000);
+        });
+
     }
 
     addTodoTask = (event: any) => {
@@ -105,7 +112,7 @@ const mapStateToProps = (state: RootStore) => {
 const mapDispatchToProps = (dispatch: any) => {
 
     return {
-        getAllTodos:()=> dispatch(GetTodos()),
+        getAllTodos: () => dispatch(GetTodos()),
     }
 
 }

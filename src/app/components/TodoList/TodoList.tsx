@@ -1,5 +1,5 @@
 import React from 'react';
-import { ITodoItem, ITodoList } from '../../actions/TodoTypes';
+import { ITodoList } from '../../actions/TodoTypes';
 import TodoListItem from '../TodoListItem/TodoListItem';
 import { IDeleteTodoTask } from '../../TodoService';
 

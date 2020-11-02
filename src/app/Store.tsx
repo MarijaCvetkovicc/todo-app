@@ -8,7 +8,6 @@ const middleware = [thunk];
 const Store = createStore(
     RootReducer, composeWithDevTools(
         applyMiddleware(...middleware),
-        // other store enhancers if any
-      ));
+    ));
 export type RootStore = ReturnType<typeof RootReducer>;
 export default Store;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { ITodoList } from '../../actions/TodoTypes';
 import TodoListItem from '../TodoListItem/TodoListItem';
-import { IDeleteTodoTask } from '../../TodoService';
+import { IDeleteTodoTask } from '../../TodoApp/TodoApp';
 
 
 interface TodoListProps {
@@ -11,8 +11,18 @@ interface TodoListProps {
 
 function TodoList(props: TodoListProps) {
     return (
-        <div>
-            <ul className="list-group">
+
+        <table className="table table-striped">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Is It Completed?</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
                 {
                     props.todoList.map(
                         (item, id) => {
@@ -20,8 +30,8 @@ function TodoList(props: TodoListProps) {
                         }
                     )
                 }
-            </ul>
-        </div>
+            </tbody>
+        </table>
     );
 }
 

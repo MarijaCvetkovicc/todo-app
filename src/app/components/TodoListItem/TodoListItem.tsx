@@ -1,6 +1,7 @@
 import React from 'react';
-import { ITodoItem  } from '../../actions/TodoTypes';
-import { IDeleteTodoTask } from '../../TodoService';
+import { ITodoItem } from '../../actions/TodoTypes';
+import { IDeleteTodoTask } from '../../TodoApp/TodoApp';
+import { Link } from 'react-router-dom';
 
 interface TodoListItemProps {
     deleteTodoTask: IDeleteTodoTask;
@@ -10,13 +11,16 @@ interface TodoListItemProps {
 function TodoListItem(props: TodoListItemProps) {
 
     return (
-        <div>
-            <li className="list-group-item" >
-                {props.item.title}
-                <button className="btn btn-sm btn-outline-danger float-right"
-                    onClick={() => props.deleteTodoTask(props.item.id)}>X</button>
-            </li>
-        </div>
+        <tr>
+            <td>{props.item.title}</td>
+            <td>{props.item.description}</td>
+            <td>{(props.item.completed === true) ? 'Completed' : 'Not Completed'}</td>
+            <td><button className="btn btn-sm btn-outline-warning "
+            ><Link to={`/todos/${props.item.id}`}>Edit</Link></button></td>
+            <td><button className="btn btn-sm btn-outline-danger "
+                onClick={() => props.deleteTodoTask(props.item.id)}>Delete</button></td>
+        </tr>
+
     );
 }
 

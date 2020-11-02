@@ -1,20 +1,19 @@
 import React, { Component } from 'react';
-import './App.css';
 import TodoApp from './app/TodoApp/TodoApp';
-import { Provider } from 'react-redux';
-import store from './app/Store';
+import TodoEdit from './app/components/TodoEdit/TodoEdit';
+import { BrowserRouter, Route } from 'react-router-dom';
 class App extends Component {
 
   render() {
     return (
-      <Provider store={store}>
+      <BrowserRouter>
         <div>
-          <TodoApp />
+          <Route path="/" exact component={TodoApp} />
+          <Route path="/todos" exact component={TodoApp} />
+          <Route path="/todos/:id" component={TodoEdit} />
         </div>
-      </Provider>
+      </BrowserRouter>
     );
   }
-
 }
-
 export default App;

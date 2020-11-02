@@ -1,11 +1,10 @@
 import axios from 'axios';
-import { ITodoList } from './actions/TodoTypes';
+import { ITodoItem, ITodoList } from './actions/TodoTypes';
 
 const api = axios.create({
     baseURL: 'http://localhost:3001/items'
 })
 
-export type IDeleteTodoTask = (id: number) => void;
 
 class TodoService {
 
@@ -13,23 +12,27 @@ class TodoService {
         return api.get('/').then(response => response.data);
     }
 
-    static addTodo = (taskDesc: string) => {
+    static addTodo = (title: string, description: string, completed: boolean) => {
         api.post('/', {
-            title: taskDesc,
-            completed: false
-        }).then(function (response) {
-            console.log(response);
+            title: title,
+            description: description,
+            completed: completed
+        })
+    }
+    static editTodo = (title: string, description: string, id: number, completed: boolean) => {
+        api.put('/' + id, {
+            title: title,
+            description: description,
+            completed: completed
         })
     }
 
     static deleteTodo = (id: number) => {
-        api.delete('/' + id
-        ).then(function (response) {
-            console.log(response);
-        })
+        api.delete('/' + id)
     }
 
-    getTodo = () => {
+    static getTodo = function (id: number): Promise<ITodoItem> {
+        return api.get('/' + id).then(response => response.data);
     }
 
 }

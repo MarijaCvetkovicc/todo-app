@@ -1,22 +1,22 @@
 import React, { Component, Fragment } from 'react';
 import TodoList from '../components/TodoList/TodoList';
+import TodoAdd from '../components/TodoAdd/TodoAdd';
 import { ITodoList } from '../actions/TodoTypes';
 import TodoService from '../TodoService';
 import { RootStore } from '../Store';
 import { GetTodos } from '../actions/TodoAction';
 import { connect } from 'react-redux';
 
-
 interface Props {
     todos: ITodoList,
     getAllTodos(): any
-
 }
 
 interface ITodoAppState {
     loading: boolean,
 }
 
+export type IDeleteTodoTask = (id: number) => void;
 
 export function deleteTodoTask(arr: ITodoList, index: number) {
     let taskArray = arr;
@@ -30,7 +30,6 @@ class TodoApp extends Component<Props, ITodoAppState> {
         this.state = {
             loading: false,
         }
-
     }
     componentDidMount() {
         this.setState({ loading: true });
@@ -42,10 +41,8 @@ class TodoApp extends Component<Props, ITodoAppState> {
         });
     }
 
-
     deleteTodoTask = (id: number) => {
         this.setState({ loading: true });
-
         TodoService.deleteTodo(id);
         this.props.getAllTodos().then(() => {
             setTimeout(() => {
@@ -55,14 +52,11 @@ class TodoApp extends Component<Props, ITodoAppState> {
 
     }
 
-    addTodoTask = (event: any) => {
-        var taskDesc = event.target.elements.todoTask.value;
-        if (taskDesc.length > 0) {
-            TodoService.addTodo(taskDesc);
-            event.target.reset();
-        } else {
-            event.preventDefault();
+    addTodoTask = (title: string, description: string, completed: boolean) => {
+        if (title.length > 0) {
+            TodoService.addTodo(title, description, completed);
         }
+        this.componentDidMount();
     }
 
     renderLoader() {
@@ -74,17 +68,9 @@ class TodoApp extends Component<Props, ITodoAppState> {
     }
 
     renderForm() {
-        console.log(this.props.todos);
         return (
             <Fragment>
-                <form className="mb-3" onSubmit={this.addTodoTask}>
-                    <div className="input-group">
-                        <input type="text" name="todoTask" className="form-control" placeholder="Enter text here..." autoComplete="off" />
-                        <div className="input-group-append">
-                            <button type="submit" className="btn btn-outline-success">Add</button>
-                        </div>
-                    </div>
-                </form>
+                <TodoAdd addTodoTask={this.addTodoTask.bind(this)} />
                 <TodoList deleteTodoTask={this.deleteTodoTask.bind(this)} todoList={this.props.todos} />
             </Fragment>
         );
@@ -110,12 +96,8 @@ const mapStateToProps = (state: RootStore) => {
     };
 };
 const mapDispatchToProps = (dispatch: any) => {
-
     return {
         getAllTodos: () => dispatch(GetTodos()),
     }
-
 }
-
 export default connect(mapStateToProps, mapDispatchToProps)(TodoApp);
-//export default TodoApp;

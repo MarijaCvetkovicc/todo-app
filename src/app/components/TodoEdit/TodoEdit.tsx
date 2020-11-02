@@ -1,5 +1,5 @@
 import React from 'react';
-import { ITodoItem } from '../../actions/TodoTypes';
+import { ITodoItem } from '../../redux/actions/TodoTypes';
 import { RouteComponentProps } from 'react-router-dom';
 import TodoService from '../../TodoService';
 import TodoEditForm from './TodoEditForm';
@@ -23,7 +23,6 @@ class TodoEdit extends React.Component<TodoEditProps, TodoEditState>{
                 completed: false
             }
         }
-
     }
 
     componentDidMount() {
@@ -40,9 +39,9 @@ class TodoEdit extends React.Component<TodoEditProps, TodoEditState>{
         })
     }
 
-    editTodoTask = (title: string, description: string, id: number, completed: boolean) => {
+    editTodoTask = async (title: string, description: string, id: number, completed: boolean) => {
         if (title.length > 0) {
-            TodoService.editTodo(title, description, id, completed);
+          await  TodoService.editTodo(title, description, id, completed);
         }
         this.props.history.push('/todos');
     }

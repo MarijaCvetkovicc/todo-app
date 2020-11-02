@@ -1,10 +1,10 @@
 import React, { Component, Fragment } from 'react';
 import TodoList from '../components/TodoList/TodoList';
 import TodoAdd from '../components/TodoAdd/TodoAdd';
-import { ITodoList } from '../actions/TodoTypes';
+import { ITodoList } from '../redux/actions/TodoTypes';
 import TodoService from '../TodoService';
-import { RootStore } from '../Store';
-import { GetTodos } from '../actions/TodoAction';
+import { RootStore } from '../redux/Store';
+import { GetTodos } from '../redux/actions/TodoAction';
 import { connect } from 'react-redux';
 
 interface Props {
@@ -41,15 +41,14 @@ class TodoApp extends Component<Props, ITodoAppState> {
         });
     }
 
-    deleteTodoTask = (id: number) => {
+    deleteTodoTask = async (id: number) => {
         this.setState({ loading: true });
-        TodoService.deleteTodo(id);
+        await TodoService.deleteTodo(id);
         this.props.getAllTodos().then(() => {
             setTimeout(() => {
                 this.setState({ loading: false });
             }, 1000);
         });
-
     }
 
     addTodoTask = (title: string, description: string, completed: boolean) => {
@@ -62,7 +61,7 @@ class TodoApp extends Component<Props, ITodoAppState> {
     renderLoader() {
         return (
             <div>
-                <img src="https://media1.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif?cid=ecf05e47geg4hp8wdcsr7qohp3ojopsvwkuzu5pyjgsr8yf6&rid=giphy.gif" alt="Loading..." />
+                <img className="rounded mx-auto d-block" src="https://media1.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif?cid=ecf05e47geg4hp8wdcsr7qohp3ojopsvwkuzu5pyjgsr8yf6&rid=giphy.gif" alt="Loading..." />
             </div>
         );
     }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { ITodoItem } from '../../actions/TodoTypes';
+import { ITodoItem } from '../../redux/actions/TodoTypes';
 import { Link } from 'react-router-dom';
 
 export type IEditTodoTask = (title: string, description: string, id: number, completed: boolean) => void;
@@ -27,13 +27,9 @@ export default function TodoEditForm(props: TodoEditFormProps) {
         }),
         onSubmit: ({ title, description, completed }) => {
             props.editTodoTask(title, description, props.item.id, completed)
-        }
+        },
+        enableReinitialize:true
     });
-
-    console.log("formik:" + values.title);
-    //console.log(props.item.id);
-    console.log(props.item.title);
-    console.log(props.item.description);
 
     return (
         <form className="mb-3" onSubmit={handleSubmit}>
@@ -48,13 +44,14 @@ export default function TodoEditForm(props: TodoEditFormProps) {
                 <textarea value={values.description} onChange={handleChange} onBlur={handleBlur} name="description" className="form-control"  ></textarea>
                 {touched.description && errors.description ? (<div className="alert alert-danger" role="alert">{errors.description}</div>) : null}
             </div>
-            <div className="form-check my-4">
+            <div className="form-check">
                 <input type="checkbox" checked={values.completed} onChange={handleChange} name="completed" className="form-check-input" />
                 <label className="form-check-label" >Check for Complete</label>
             </div>
-            <div className="input-group-append">
-                <button type="submit" className="btn btn-outline-warning btn-lg mx-1" >Edit</button>
-                <button className="btn btn-outline-dark btn-lg mx-1" ><Link to={`/todos/`}>Go Back</Link></button>            </div>
+            <div className="input-group-append float-right my-4">
+                <button type="submit" className="btn btn-outline-warning btn-lg mx-1" >Save</button>
+                <Link to={`/todos/`}><button className="btn btn-outline-dark btn-lg mx-1" >Go Back</button> </Link>         
+            </div>
         </form >
     );
 }

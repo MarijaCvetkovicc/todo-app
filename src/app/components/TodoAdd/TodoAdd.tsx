@@ -6,7 +6,6 @@ export type IAddTodoTask = (title: string, description: string, complete: boolea
 
 interface TodoAddProps {
     addTodoTask: IAddTodoTask;
-
 }
 
 function TodoAdd(props: TodoAddProps) {
@@ -39,12 +38,12 @@ function TodoAdd(props: TodoAddProps) {
                 <textarea value={values.description} onChange={handleChange} onBlur={handleBlur} name="description" className="form-control" placeholder="Enter text here..." autoComplete="off" ></textarea>
                 {touched.description && errors.description ? (<div className="alert alert-danger" role="alert">{errors.description}</div>) : null}
             </div>
-            <div className="form-check my-4">
-                <input type="checkbox" checked={values.completed} onChange={handleChange} className="form-check-input" />
+            <div className="form-check">
+                <input type="checkbox" checked={values.completed} onChange={handleChange} name="completed" className="form-check-input" />
                 <label className="form-check-label" >Check for Complete</label>
             </div>
-            <div className="input-group-append">
-                <button type="submit" className="btn btn-outline-success">Add</button>
+            <div className="input-group-append float-right my-4">
+                <button type="submit" className="btn btn-outline-success btn-lg">Add</button>
             </div>
         </form >
     );

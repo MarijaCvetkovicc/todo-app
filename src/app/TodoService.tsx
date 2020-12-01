@@ -13,9 +13,6 @@ const MOCK_SERVISE:ITodoList=[{
 class TodoService {
 
     static getTodos = function (): Promise<ITodoList> {
-        /*return new Promise((res)=>{
-            res(MOCK_SERVISE)
-        });*/
         return api.get('/').then(response => response.data);
     }
 

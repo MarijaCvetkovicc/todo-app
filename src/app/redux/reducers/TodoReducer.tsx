@@ -1,6 +1,6 @@
-import { TodoDispatchTypes, GET_TODOS } from '../actions/TodoTypes';
+import { TodoDispatchTypes, GET_TODOS, DELETE_TODO } from '../actions/TodoTypes';
 import { IDefaultState } from '../actions/TodoTypes';
-
+import _ from 'lodash';
 const defaultState: IDefaultState = {
     todos: []
 }
@@ -11,6 +11,10 @@ const todoReducer = (state: IDefaultState = defaultState, action: TodoDispatchTy
             return {
                 todos: action.payload
             };
+        case DELETE_TODO:
+            return {
+            todos:action.payload
+        };
         default:
             return state;
     }

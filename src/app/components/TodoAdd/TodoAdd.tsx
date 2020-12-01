@@ -9,7 +9,6 @@ interface TodoAddProps {
 }
 
 function TodoAdd(props: TodoAddProps) {
-
     const { handleSubmit, handleChange, values, touched, errors, handleBlur } = useFormik({
         initialValues: {
             title: '',

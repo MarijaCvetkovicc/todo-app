@@ -43,15 +43,8 @@ class TodoApp extends Component<Props, ITodoAppState> {
     }
 
     deleteTodoTask = async (id: number) => {
-        //this.setState({ loading: true });
-       /* await TodoService.deleteTodo(id);
-        this.props.getAllTodos().then(() => {
-            setTimeout(() => {
-                this.setState({ loading: false });
-            }, 1000);
-        });*/
         this.setState({ loading: true });
-        await this.props.deleteTodo(id);
+        await TodoService.deleteTodo(id);
         this.props.getAllTodos().then(() => {
             setTimeout(() => {
                 this.setState({ loading: false });
@@ -102,6 +95,7 @@ const mapStateToProps = (state: RootStore) => {
         todos: state.todos.todos
     };
 };
+
 const mapDispatchToProps = (dispatch: any,ownProps:number) => {
     return {
         getAllTodos: () => dispatch(GetTodos()),

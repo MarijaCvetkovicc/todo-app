@@ -10,6 +10,7 @@ const MOCK_SERVISE:ITodoList=[{
     description:'opis',
     completed:true
 }];
+
 class TodoService {
 
     static getTodos = function (): Promise<ITodoList> {
@@ -34,6 +35,7 @@ class TodoService {
     static deleteTodo = async (id: number) : Promise<ITodoList>=> {
        await api.delete('/' + id)
         return api.get('/').then(response => response.data);
+
     }
 
     static getTodo = function (id: number): Promise<ITodoItem> {

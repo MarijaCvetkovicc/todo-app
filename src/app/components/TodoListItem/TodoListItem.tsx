@@ -36,4 +36,3 @@ function TodoListItem(props: TodoListItemProps) {
 }
 
 export default TodoListItem;
-

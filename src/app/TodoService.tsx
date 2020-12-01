@@ -4,6 +4,12 @@ import { ITodoItem, ITodoList } from './redux/actions/TodoTypes';
 const api = axios.create({
     baseURL: 'http://localhost:3001/items'
 })
+const MOCK_SERVISE:ITodoList=[{
+    id:1,
+    title:'prvi',
+    description:'opis',
+    completed:true
+}];
 
 class TodoService {
 
@@ -26,8 +32,10 @@ class TodoService {
         })
     }
 
-    static deleteTodo = (id: number) => {
-        api.delete('/' + id)
+    static deleteTodo = async (id: number) : Promise<ITodoList>=> {
+       await api.delete('/' + id)
+        return api.get('/').then(response => response.data);
+
     }
 
     static getTodo = function (id: number): Promise<ITodoItem> {

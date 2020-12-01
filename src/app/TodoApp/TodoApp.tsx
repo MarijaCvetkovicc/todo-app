@@ -4,12 +4,13 @@ import TodoAdd from '../components/TodoAdd/TodoAdd';
 import { ITodoList } from '../redux/actions/TodoTypes';
 import TodoService from '../TodoService';
 import { RootStore } from '../redux/Store';
-import { GetTodos } from '../redux/actions/TodoAction';
+import { GetTodos,deleteTodo } from '../redux/actions/TodoAction';
 import { connect } from 'react-redux';
 
 interface Props {
     todos: ITodoList,
     getAllTodos(): any
+    deleteTodo(id:number):any
 }
 
 interface ITodoAppState {
@@ -94,9 +95,11 @@ const mapStateToProps = (state: RootStore) => {
         todos: state.todos.todos
     };
 };
-const mapDispatchToProps = (dispatch: any) => {
+
+const mapDispatchToProps = (dispatch: any,ownProps:number) => {
     return {
         getAllTodos: () => dispatch(GetTodos()),
+        deleteTodo:()=>dispatch(deleteTodo(ownProps)),
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(TodoApp);

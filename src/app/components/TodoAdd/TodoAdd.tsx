@@ -25,7 +25,6 @@ function TodoAdd(props: TodoAddProps) {
         }
     });
     return (
-
         <form className="mb-3" onSubmit={handleSubmit}>
             <div className="form-group">
                 <label >Title: </label>

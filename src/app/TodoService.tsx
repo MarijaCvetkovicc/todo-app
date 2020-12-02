@@ -33,7 +33,7 @@ class TodoService {
     }
 
     static deleteTodo = async (id: number) : Promise<ITodoList>=> {
-       await api.delete('/' + id)
+       await api.delete('/' + id);
         return api.get('/').then(response => response.data);
 
     }

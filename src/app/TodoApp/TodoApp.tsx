@@ -34,7 +34,6 @@ class TodoApp extends Component<Props, ITodoAppState> {
     }
     componentDidMount() {
         this.setState({ loading: true });
-
         this.props.getAllTodos().then(() => {
             setTimeout(() => {
                 this.setState({ loading: false });
@@ -95,11 +94,10 @@ const mapStateToProps = (state: RootStore) => {
         todos: state.todos.todos
     };
 };
-
-const mapDispatchToProps = (dispatch: any,ownProps:number) => {
+const mapDispatchToProps = (dispatch: any) => {
     return {
         getAllTodos: () => dispatch(GetTodos()),
-        deleteTodo:()=>dispatch(deleteTodo(ownProps)),
+        deleteTodo:(id:number)=>dispatch(deleteTodo(id)),
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(TodoApp);

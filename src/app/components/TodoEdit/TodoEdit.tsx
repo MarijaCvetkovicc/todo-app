@@ -5,7 +5,6 @@ import TodoService from '../../TodoService';
 import TodoEditForm from './TodoEditForm';
 
 interface TodoEditProps extends RouteComponentProps<{ id: string }> {
-
 }
 interface TodoEditState {
     item: ITodoItem,

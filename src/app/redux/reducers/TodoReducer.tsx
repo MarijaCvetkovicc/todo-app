@@ -1,6 +1,5 @@
 import { TodoDispatchTypes, GET_TODOS, DELETE_TODO } from '../actions/TodoTypes';
 import { IDefaultState } from '../actions/TodoTypes';
-import _ from 'lodash';
 const defaultState: IDefaultState = {
     todos: []
 }

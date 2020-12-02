@@ -10,9 +10,7 @@ interface TodoEditProps extends RouteComponentProps<{ id: string }> {
 interface TodoEditState {
     item: ITodoItem,
 }
-
 class TodoEdit extends React.Component<TodoEditProps, TodoEditState>{
-
     constructor(props: TodoEditProps) {
         super(props);
         this.state = {

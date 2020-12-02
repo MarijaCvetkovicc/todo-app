@@ -17,7 +17,7 @@ function TodoAdd(props: TodoAddProps) {
         },
         validationSchema: Yup.object({
             title: Yup.string().min(6, 'Must be longer then 6 characters ').required('Title is required'),
-            description: Yup.string().min(10, 'Must be longer then 10 characters ').required('Title is required')
+            description: Yup.string().min(6, 'Must be longer then 6 characters ').required('Title is required')
 
         }),
         onSubmit: ({ title, description, completed }) => {

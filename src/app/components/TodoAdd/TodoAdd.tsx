@@ -3,11 +3,9 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 export type IAddTodoTask = (title: string, description: string, complete: boolean) => void;
-
 interface TodoAddProps {
     addTodoTask: IAddTodoTask;
 }
-
 function TodoAdd(props: TodoAddProps) {
     const { handleSubmit, handleChange, values, touched, errors, handleBlur } = useFormik({
         initialValues: {
@@ -38,7 +36,7 @@ function TodoAdd(props: TodoAddProps) {
             </div>
             <div className="form-check">
                 <input type="checkbox" checked={values.completed} onChange={handleChange} name="completed" className="form-check-input" />
-                <label className="form-check-label" >Check for Complete</label>
+                <label className="form-check-label"> Check for Complete</label>
             </div>
             <div className="input-group-append float-right my-4">
                 <button type="submit" className="btn btn-outline-success btn-lg">Add</button>

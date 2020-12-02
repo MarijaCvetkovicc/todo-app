@@ -28,8 +28,7 @@ class TodoEdit extends React.Component<TodoEditProps, TodoEditState>{
     componentDidMount() {
         TodoService.getTodo(this.state.item.id).then((res) => {
             this.setState({
-                item:
-                {
+                item: {
                     id: res.id,
                     title: res.title,
                     description: res.description,
@@ -41,7 +40,7 @@ class TodoEdit extends React.Component<TodoEditProps, TodoEditState>{
 
     editTodoTask = async (title: string, description: string, id: number, completed: boolean) => {
         if (title.length > 0) {
-          await  TodoService.editTodo(title, description, id, completed);
+            await TodoService.editTodo(title, description, id, completed);
         }
         this.props.history.push('/todos');
     }

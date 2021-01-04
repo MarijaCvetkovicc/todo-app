@@ -3,6 +3,7 @@ import { ITodoItem } from '../../redux/actions/TodoTypes';
 import { RouteComponentProps } from 'react-router-dom';
 import TodoService from '../../TodoService';
 import TodoEditForm from './TodoEditForm';
+import { Container, Typography } from '@material-ui/core';
 
 interface TodoEditProps extends RouteComponentProps<{ id: string }> {
 }
@@ -18,7 +19,8 @@ class TodoEdit extends React.Component<TodoEditProps, TodoEditState>{
                 id: Number(props.match.params.id),
                 title: '',
                 description: '',
-                completed: false
+                completed: false,
+                create:''
             }
         }
     }
@@ -30,7 +32,8 @@ class TodoEdit extends React.Component<TodoEditProps, TodoEditState>{
                     id: res.id,
                     title: res.title,
                     description: res.description,
-                    completed: res.completed
+                    completed: res.completed,
+                    create:res.create
                 }
             })
         })
@@ -46,11 +49,11 @@ class TodoEdit extends React.Component<TodoEditProps, TodoEditState>{
     render() {
         return (
             <div>
-                <div className="jumbotron jumbotron-fluid py-2">
-                    <div className="container">
-                        <h1 className="display-4">Edit List of Todos</h1>
-                    </div>
-                </div>
+               <Container maxWidth="sm">
+                    <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
+                        Edit Task: {this.state.item.title}
+            </Typography>
+                </Container>
                 <TodoEditForm editTodoTask={this.editTodoTask.bind(this)} item={this.state.item} />
             </div>
         );

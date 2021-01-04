@@ -1,41 +1,32 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { ITodoItem } from '../../redux/actions/TodoTypes';
-import { Link } from 'react-router-dom';
 import { Box, Button, Checkbox, FormControlLabel, Grid, TextField } from '@material-ui/core';
 import SaveIcon from '@material-ui/icons/Save';
 
+import { Link } from 'react-router-dom';
 
-export type IEditTodoTask = (title: string, description: string, id: number, completed: boolean) => void;
-
-interface TodoEditFormProps {
-    item: ITodoItem,
-    editTodoTask: IEditTodoTask,
+export type IAddTodoTask = (title: string, description: string, complete: boolean) => void;
+interface TodoAddProps {
+    addTodoTask: IAddTodoTask;
 }
-
-export default function TodoEditForm(props: TodoEditFormProps) {
-
+function TodoAddForm(props: TodoAddProps) {
     const { handleSubmit, handleChange, values, touched, errors, handleBlur } = useFormik({
         initialValues: {
-            id: props.item.id,
-            title: props.item.title,
-            description: props.item.description,
-            completed: props.item.completed
+            title: '',
+            description: '',
+            completed: false
         },
         validationSchema: Yup.object({
             title: Yup.string().min(6, 'Must be longer then 6 characters ').required('Title is required'),
-            description: Yup.string().min(10, 'Must be longer then 10 characters ').required('Title is required')
+            description: Yup.string().min(6, 'Must be longer then 6 characters ').required('Title is required')
 
         }),
         onSubmit: ({ title, description, completed }) => {
-            props.editTodoTask(title, description, props.item.id, completed)
-        },
-        enableReinitialize:true
+            props.addTodoTask(title, description, completed)
+        }
     });
-
     return (
-       
         <form onSubmit={handleSubmit}>
             <Grid item container spacing={3} direction="column">
 
@@ -76,7 +67,7 @@ export default function TodoEditForm(props: TodoEditFormProps) {
                 <Grid container item spacing={3} direction="row">
                     <Box p={2} >
                         <Button variant="contained" type="submit" color="primary" startIcon={<SaveIcon />}>
-                            Save
+                            Add
                     </Button>
                     </Box>
                     <Box p={2}>
@@ -90,3 +81,5 @@ export default function TodoEditForm(props: TodoEditFormProps) {
         </form >
     );
 }
+
+export default TodoAddForm;

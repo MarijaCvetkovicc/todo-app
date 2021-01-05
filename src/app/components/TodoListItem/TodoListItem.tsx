@@ -32,7 +32,7 @@ function TodoListItem(props: TodoListItemProps) {
                 </button>
             </td>
             <td>
-                {props.item.create}
+                {props.item.priority}
             </td>
         </tr>
     );

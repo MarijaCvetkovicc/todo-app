@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import TodoList from '../TodoList/TodoList';
 import { ITodoList } from '../../redux/actions/TodoTypes';
-import TodoService from '../../TodoService';
 import { RootStore } from '../../redux/Store';
 import { GetTodos, deleteTodo } from '../../redux/actions/TodoAction';
 import { connect } from 'react-redux';
@@ -44,7 +43,7 @@ class TodoApp extends Component<Props, ITodoAppState> {
 
     deleteTodoTask = async (id: number) => {
         this.setState({ loading: true });
-        await TodoService.deleteTodo(id);
+        await this.props.deleteTodo(id);
         this.props.getAllTodos().then(() => {
             setTimeout(() => {
                 this.setState({ loading: false });

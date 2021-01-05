@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { ITask } from './components/TodoApp/TodoForm';
 import { ITodoItem, ITodoList } from './redux/actions/TodoTypes';
 
 const api = axios.create({
@@ -11,23 +12,29 @@ class TodoService {
         return api.get('/').then(response => response.data);
     }
 
-    static addTodo = (title: string, description: string, completed: boolean) => {
-        api.post('/', {
-            title: title,
-            description: description,
-            completed: completed
-        })
+    static addTodo = (task: ITask) => {
+        return api.post('/', {
+            title: task.title,
+            description: task.description,
+            completed: task.completed,
+            priority: task.priority,
+            fromDate: task.fromDate,
+            toDate: task.toDate,
+        });
     }
-    static editTodo = (title: string, description: string, id: number, completed: boolean) => {
-        api.put('/' + id, {
-            title: title,
-            description: description,
-            completed: completed
+    static editTodo = (task: ITodoItem) => {
+        return api.put('/' + task.id, {
+            title: task.title,
+            description: task.description,
+            completed: task.completed,
+            priority: task.priority,
+            fromDate: task.fromDate,
+            toDate: task.toDate,
         })
     }
 
-    static deleteTodo = async (id: number) : Promise<ITodoList>=> {
-       await api.delete('/' + id);
+    static deleteTodo = async (id: number): Promise<ITodoList> => {
+        await api.delete('/' + id);
         return api.get('/').then(response => response.data);
 
     }

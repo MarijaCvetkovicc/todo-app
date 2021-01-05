@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import TodoApp from './app/components/TodoApp/TodoApp';
-import TodoEdit from './app/components/TodoEdit/TodoEdit';
+import TodoEdit from './app/components/TodoApp/TodoEdit';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
-import TodoAdd from './app/components/TodoAdd/TodoAdd';
-import { Grid, ThemeProvider, createMuiTheme, responsiveFontSizes, CssBaseline, Switch as SwitchMaterial } from '@material-ui/core';
-
+import TodoAdd from './app/components/TodoApp/TodoAdd';
+import { unstable_createMuiStrictModeTheme as createMuiTheme } from '@material-ui/core';
+import { Grid, ThemeProvider, responsiveFontSizes, CssBaseline, Switch as SwitchMaterial } from '@material-ui/core';
 
 function App() {
   const [darkState, setDarkState] = useState(false);

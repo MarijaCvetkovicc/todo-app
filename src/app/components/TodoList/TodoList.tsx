@@ -20,7 +20,7 @@ function TodoList(props: TodoListProps) {
                     <th>Is It Completed?</th>
                     <th>Edit</th>
                     <th>Delete</th>
-                    <th>Created</th>
+                    <th>Priority</th>
                 </tr>
             </thead>
             <tbody>

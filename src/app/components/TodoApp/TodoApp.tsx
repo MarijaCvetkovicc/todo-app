@@ -1,16 +1,16 @@
 import React, { Component, Fragment } from 'react';
-import TodoList from '../components/TodoList/TodoList';
-import TodoAdd from '../components/TodoAdd/TodoAdd';
-import { ITodoList } from '../redux/actions/TodoTypes';
-import TodoService from '../TodoService';
-import { RootStore } from '../redux/Store';
-import { GetTodos,deleteTodo } from '../redux/actions/TodoAction';
+import TodoList from '../TodoList/TodoList';
+import { ITodoList } from '../../redux/actions/TodoTypes';
+import { RootStore } from '../../redux/Store';
+import { GetTodos, deleteTodo } from '../../redux/actions/TodoAction';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { Box, Button, CircularProgress, Container, Grid, Typography } from '@material-ui/core';
 
 interface Props {
     todos: ITodoList,
     getAllTodos(): any
-    deleteTodo(id:number):any
+    deleteTodo(id: number): any
 }
 
 interface ITodoAppState {
@@ -43,7 +43,7 @@ class TodoApp extends Component<Props, ITodoAppState> {
 
     deleteTodoTask = async (id: number) => {
         this.setState({ loading: true });
-        await TodoService.deleteTodo(id);
+        await this.props.deleteTodo(id);
         this.props.getAllTodos().then(() => {
             setTimeout(() => {
                 this.setState({ loading: false });
@@ -51,25 +51,28 @@ class TodoApp extends Component<Props, ITodoAppState> {
         });
     }
 
-    addTodoTask = (title: string, description: string, completed: boolean) => {
-        if (title.length > 0) {
-            TodoService.addTodo(title, description, completed);
-        }
-        this.componentDidMount();
-    }
 
     renderLoader() {
         return (
-            <div>
-                <img className="rounded mx-auto d-block" src="https://media1.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif?cid=ecf05e47geg4hp8wdcsr7qohp3ojopsvwkuzu5pyjgsr8yf6&rid=giphy.gif" alt="Loading..." />
-            </div>
+            <Grid container spacing={0} direction="column" alignItems="center" justify="center">
+                <Grid item xs={3}>
+                    <CircularProgress />
+                </Grid>
+            </Grid>
+
         );
     }
 
     renderForm() {
         return (
             <Fragment>
-                <TodoAdd addTodoTask={this.addTodoTask.bind(this)} />
+                <Box p={1} mx="auto" >
+                    <Link to={`/todos/create`}>
+                        <Button variant="outlined" color="primary">
+                            Create
+                    </Button>
+                    </Link>
+                </Box>
                 <TodoList deleteTodoTask={this.deleteTodoTask.bind(this)} todoList={this.props.todos} />
             </Fragment>
         );
@@ -77,15 +80,16 @@ class TodoApp extends Component<Props, ITodoAppState> {
 
     render() {
         return (
-            <div>
-                <div className="jumbotron jumbotron-fluid py-2">
-                    <div className="container">
-                        <h1 className="display-4">List of Todos</h1>
-                    </div>
-                </div>
+            <Container maxWidth="sm">
+                <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
+                    List Of Tasks
+            </Typography>
+                <Typography variant="h5" align="center" color="textSecondary" paragraph>
+                    I will help you remeber everything you need to do.
+            </Typography>
                 {this.state.loading ? this.renderLoader() : this.renderForm()}
 
-            </div>
+            </Container>
         );
     }
 }
@@ -97,7 +101,7 @@ const mapStateToProps = (state: RootStore) => {
 const mapDispatchToProps = (dispatch: any) => {
     return {
         getAllTodos: () => dispatch(GetTodos()),
-        deleteTodo:(id:number)=>dispatch(deleteTodo(id)),
+        deleteTodo: (id: number) => dispatch(deleteTodo(id)),
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(TodoApp);

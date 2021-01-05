@@ -1,6 +1,6 @@
 import React from 'react';
 import { ITodoItem } from '../../redux/actions/TodoTypes';
-import { IDeleteTodoTask } from '../../TodoApp/TodoApp';
+import { IDeleteTodoTask } from '../TodoApp/TodoApp';
 import { Link } from 'react-router-dom';
 
 interface TodoListItemProps {
@@ -30,6 +30,9 @@ function TodoListItem(props: TodoListItemProps) {
                 <button className="btn btn-sm btn-outline-danger " onClick={() => props.deleteTodoTask(props.item.id)}>
                     Delete
                 </button>
+            </td>
+            <td>
+                {props.item.priority}
             </td>
         </tr>
     );

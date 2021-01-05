@@ -1,7 +1,7 @@
 import React from 'react';
 import { ITodoList } from '../../redux/actions/TodoTypes';
 import TodoListItem from '../TodoListItem/TodoListItem';
-import { IDeleteTodoTask } from '../../TodoApp/TodoApp';
+import { IDeleteTodoTask } from '../TodoApp/TodoApp';
 
 
 interface TodoListProps {
@@ -20,6 +20,7 @@ function TodoList(props: TodoListProps) {
                     <th>Is It Completed?</th>
                     <th>Edit</th>
                     <th>Delete</th>
+                    <th>Priority</th>
                 </tr>
             </thead>
             <tbody>

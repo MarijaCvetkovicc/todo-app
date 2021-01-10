@@ -3,10 +3,10 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Box, Button, Checkbox, FormControlLabel, Grid, MenuItem, TextField } from '@material-ui/core';
 import SaveIcon from '@material-ui/icons/Save';
-
 import { Link } from 'react-router-dom';
 import { priorities } from '../../util/constants';
 import { ITodoItem } from '../../redux/actions/TodoTypes';
+import { setColor } from '../../util/helpers';
 
 export type ISaveTodoTask = (task: ITask) => void;
 export interface ITask {
@@ -14,8 +14,9 @@ export interface ITask {
     description: string,
     priority: string,
     completed: boolean,
-    fromDate: string,
-    toDate: string,
+    start: string,
+    end: string,
+    backgroundColor: string
 }
 interface TodoAddProps {
     item: ITodoItem,
@@ -29,29 +30,29 @@ function TodoForm(props: TodoAddProps) {
             description: props.item.description,
             completed: props.item.completed,
             priority: props.item.priority,
-            fromDate: props.item.fromDate,
-            toDate: props.item.toDate,
+            start: props.item.start,
+            end: props.item.end,
 
         },
         validationSchema: Yup.object({
-            title: Yup.string().min(6, 'Must be longer then 6 characters ').required('Title is required'),
-            description: Yup.string().min(6, 'Must be longer then 6 characters ').required('Title is required'),
+            title: Yup.string().min(4, 'Must be longer then 4 characters ').max(17, 'Must be shorter then 17 characters ').required('Title is required'),
+            description: Yup.string().min(4, 'Must be longer then 4 characters ').required('Title is required'),
             fromDate: Yup.date(),
             toDate: Yup.date().min(Yup.ref('fromDate'), "End date can't be before Start date"),
         }),
-        onSubmit: ({ title, description, completed, priority, fromDate, toDate }) => {
+        onSubmit: ({ title, description, completed, priority, start, end }) => {
             let task = {
                 title: title,
                 description: description,
                 priority: priority,
                 completed: completed,
-                fromDate: fromDate,
-                toDate: toDate,
+                start: start,
+                end: end,
+                backgroundColor: setColor(priority)
             }
             props.saveTodoTask(task)
         },
         enableReinitialize: true
-
     });
     return (
         <form onSubmit={handleSubmit}>
@@ -90,30 +91,30 @@ function TodoForm(props: TodoAddProps) {
                 <Grid container item spacing={3} direction="row">
                     <Grid item xs={6} sm={6}>
                         <TextField
-                            value={values.fromDate}
+                            value={values.start}
                             onChange={handleChange}
                             label="Start Date"
-                            name="fromDate"
+                            name="start"
                             type="datetime-local"
                             InputLabelProps={{
                                 shrink: true,
                             }}
-                            error={touched.fromDate && Boolean(errors.fromDate)}
-                            helperText={touched.fromDate && Boolean(errors.fromDate) ? (errors.fromDate) : ("Time and Date when task starts.")}
+                            error={touched.start && Boolean(errors.start)}
+                            helperText={touched.start && Boolean(errors.start) ? (errors.start) : ("Time and Date when task starts.")}
                         />
                     </Grid>
                     <Grid item xs={6} sm={6}>
                         <TextField
-                            value={values.toDate}
+                            value={values.end}
                             onChange={handleChange}
                             label="End Date"
-                            name="toDate"
+                            name="end"
                             type="datetime-local"
                             InputLabelProps={{
                                 shrink: true,
                             }}
-                            error={touched.toDate && Boolean(errors.toDate)}
-                            helperText={touched.toDate && Boolean(errors.toDate) ? (errors.toDate) : ("Time and Date when task finishs.")}
+                            error={touched.end && Boolean(errors.end)}
+                            helperText={touched.end && Boolean(errors.end) ? (errors.end) : ("Time and Date when task finishs.")}
                         />
                     </Grid>
                 </Grid>
@@ -136,7 +137,7 @@ function TodoForm(props: TodoAddProps) {
                 <Grid container item spacing={3} direction="row">
                     <Box p={2} >
                         <Button variant="contained" type="submit" color="primary" startIcon={<SaveIcon />}>
-                            {props.item.id === -1 ? 'Add' : 'Save'}
+                            {Number(props.item.id) === -1 ? 'Add' : 'Save'}
                         </Button>
                     </Box>
                     <Box p={2}>

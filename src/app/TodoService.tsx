@@ -18,8 +18,9 @@ class TodoService {
             description: task.description,
             completed: task.completed,
             priority: task.priority,
-            fromDate: task.fromDate,
-            toDate: task.toDate,
+            start: task.start,
+            end: task.end,
+            backgroundColor: task.backgroundColor
         });
     }
     static editTodo = (task: ITodoItem) => {
@@ -28,15 +29,15 @@ class TodoService {
             description: task.description,
             completed: task.completed,
             priority: task.priority,
-            fromDate: task.fromDate,
-            toDate: task.toDate,
+            start: task.start,
+            end: task.end,
+            backgroundColor: task.backgroundColor
         })
     }
 
     static deleteTodo = async (id: number): Promise<ITodoList> => {
         await api.delete('/' + id);
         return api.get('/').then(response => response.data);
-
     }
 
     static getTodo = function (id: number): Promise<ITodoItem> {

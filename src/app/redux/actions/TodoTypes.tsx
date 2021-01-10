@@ -5,13 +5,14 @@ export const EDIT_TODO = 'EDIT_TODO';
 export const DELETE_TODO = 'DELETE_TODO';
 
 export interface ITodoItem {
-    id: number,
+    id: string,
     title: string,
     description: string,
     priority: string,
     completed: boolean,
-    fromDate: string,
-    toDate: string,
+    start: string,
+    end: string,
+    backgroundColor: string
 }
 
 export type ITodoList = ITodoItem[];

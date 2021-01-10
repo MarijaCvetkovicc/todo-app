@@ -1,4 +1,3 @@
-
 export function setColor(priority: string): string {
     if (priority === 'High') {
         return '#de2e21';

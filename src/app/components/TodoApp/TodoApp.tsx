@@ -6,6 +6,8 @@ import { GetTodos, deleteTodo } from '../../redux/actions/TodoAction';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Box, Button, CircularProgress, Container, Grid, Typography } from '@material-ui/core';
+import FullCalendar, { EventClickArg, EventContentArg, EventRemoveArg } from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid';
 
 interface Props {
     todos: ITodoList,
@@ -39,6 +41,7 @@ class TodoApp extends Component<Props, ITodoAppState> {
                 this.setState({ loading: false });
             }, 1000);
         });
+
     }
 
     deleteTodoTask = async (id: number) => {
@@ -51,7 +54,14 @@ class TodoApp extends Component<Props, ITodoAppState> {
         });
     }
 
-
+    handleEventClick = (clickInfo: EventClickArg) => {
+        if (window.confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
+            clickInfo.event.remove()
+        }
+    }
+    handleEventRemove = (removeInfo: EventRemoveArg) => {
+        this.deleteTodoTask(Number(removeInfo.event.id));
+    }
     renderLoader() {
         return (
             <Grid container spacing={0} direction="column" alignItems="center" justify="center">
@@ -73,14 +83,37 @@ class TodoApp extends Component<Props, ITodoAppState> {
                     </Button>
                     </Link>
                 </Box>
-                <TodoList deleteTodoTask={this.deleteTodoTask.bind(this)} todoList={this.props.todos} />
+                <Box p={1} mx="auto" >
+                    <TodoList deleteTodoTask={this.deleteTodoTask.bind(this)} todoList={this.props.todos} />
+                </Box>
+                <Box p={1} mx="auto" >
+                    <FullCalendar
+                        plugins={[dayGridPlugin]}
+                        initialView="dayGridMonth"
+                        weekends={true}
+                        headerToolbar={{
+                            left: 'prev,next today',
+                            center: 'title',
+                            right: 'dayGridMonth'
+                        }}
+                        editable={true}
+                        selectable={true}
+                        selectMirror={true}
+                        dayMaxEvents={true}
+                        events={this.props.todos}
+                        eventContent={renderEventContent}
+                        eventClick={this.handleEventClick}
+                        eventRemove={this.handleEventRemove}
+
+                    />
+                </Box>
             </Fragment>
         );
     }
 
     render() {
         return (
-            <Container maxWidth="sm">
+            <Container >
                 <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
                     List Of Tasks
             </Typography>
@@ -105,3 +138,12 @@ const mapDispatchToProps = (dispatch: any) => {
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(TodoApp);
+
+function renderEventContent(eventContent: EventContentArg) {
+    return (
+        <>
+            <b>{eventContent.timeText}</b>
+            <i>{eventContent.event.title}</i>
+        </>
+    )
+}

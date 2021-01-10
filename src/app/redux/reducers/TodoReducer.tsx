@@ -4,13 +4,14 @@ const defaultState: IDefaultState = {
     todos: [],
     message: '',
     item: {
-        id: 0,
+        id: String(0),
         title: '',
         description: '',
         priority: '',
         completed: false,
-        toDate: '',
-        fromDate: ''
+        start: '',
+        end: '',
+        backgroundColor: '',
     }
 }
 

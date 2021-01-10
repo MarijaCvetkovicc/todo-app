@@ -8,6 +8,7 @@ import { RootStore } from '../../redux/Store';
 import { connect } from 'react-redux';
 import { editTodo, GetTodo } from '../../redux/actions/TodoAction';
 import { Alert } from '@material-ui/lab';
+import { setColor } from '../../util/helpers';
 
 interface TodoEditProps extends RouteComponentProps<{ id: string }> {
     message: any,
@@ -26,19 +27,20 @@ class TodoEdit extends React.Component<TodoEditProps, TodoEditState>{
         this.state = {
             status: true,
             task: {
-                id: Number(props.match.params.id),
+                id: props.match.params.id,
                 title: '',
                 description: '',
                 completed: false,
                 priority: 'Low',
-                fromDate: moment(new Date()).format('YYYY-MM-DDTHH:mm'),
-                toDate: moment(new Date()).format('YYYY-MM-DDTHH:mm'),
+                start: moment(new Date()).format('YYYY-MM-DDTHH:mm'),
+                end: moment(new Date()).format('YYYY-MM-DDTHH:mm'),
+                backgroundColor: ''
             }
         }
     }
 
     componentDidMount() {
-        this.props.getTask(this.state.task.id);
+        this.props.getTask(Number(this.state.task.id));
     }
 
     editTodoTask = async (task: ITask) => {
@@ -50,8 +52,9 @@ class TodoEdit extends React.Component<TodoEditProps, TodoEditState>{
                     description: task.description,
                     completed: task.completed,
                     priority: task.priority,
-                    fromDate: task.fromDate,
-                    toDate: task.toDate
+                    start: task.start,
+                    end: task.end,
+                    backgroundColor: setColor(task.priority)
                 }
             });
 

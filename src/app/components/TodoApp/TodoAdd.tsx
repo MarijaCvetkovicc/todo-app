@@ -25,13 +25,14 @@ class TodoAdd extends React.Component<TodoAddProps, TodoAppState>{
         this.state = {
             status: true,
             item: {
-                id: -1,
+                id: String(-1),
                 title: '',
                 description: '',
                 completed: false,
                 priority: 'Low',
-                fromDate: moment(new Date()).format('YYYY-MM-DDTHH:mm'),
-                toDate: moment(new Date()).format('YYYY-MM-DDTHH:mm'),
+                start: moment(new Date()).format('YYYY-MM-DDTHH:mm'),
+                end: moment(new Date()).format('YYYY-MM-DDTHH:mm'),
+                backgroundColor: '',
             }
         }
     }

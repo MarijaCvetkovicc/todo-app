@@ -1,4 +1,4 @@
-import { deleteTodoTask } from '../TodoApp/TodoApp';
+import { deleteTodoTask } from '../components/TodoApp/TodoApp';
 
 describe('Testing deleteTodoTask',()=>{
 

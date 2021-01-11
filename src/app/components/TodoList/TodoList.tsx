@@ -1,9 +1,8 @@
 import React from 'react';
 import { ITodoList } from '../../redux/actions/TodoTypes';
 import TodoListItem from '../TodoListItem/TodoListItem';
-import { IDeleteTodoTask } from '../../TodoApp/TodoApp';
-
-
+import { IDeleteTodoTask } from '../TodoApp/TodoApp';
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
 interface TodoListProps {
     deleteTodoTask: IDeleteTodoTask;
     todoList: ITodoList;
@@ -11,27 +10,28 @@ interface TodoListProps {
 
 function TodoList(props: TodoListProps) {
     return (
+        <TableContainer component={Paper}>
+            <Table>
+                <TableHead>
+                    <TableRow>
+                        <TableCell align="center">Title</TableCell>
+                        <TableCell align="center">Description</TableCell>
+                        <TableCell align="center">Is It Completed?</TableCell>
+                        <TableCell align="center">Action</TableCell>
 
-        <table className="table table-striped">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Is It Completed?</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                </tr>
-            </thead>
-            <tbody>
-                {
-                    props.todoList.map(
-                        (item, id) => {
-                            return <TodoListItem deleteTodoTask={props.deleteTodoTask} item={item} key={id} />
-                        }
-                    )
-                }
-            </tbody>
-        </table>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {
+                        props.todoList.map(
+                            (item, id) => {
+                                return <TodoListItem deleteTodoTask={props.deleteTodoTask} item={item} key={id} />
+                            }
+                        )
+                    }
+                </TableBody>
+            </Table>
+        </TableContainer>
     );
 }
 
